@@ -31,6 +31,7 @@ class Attachment(Model):
     content_type = ForeignKey(
         ContentType,
         verbose_name=_('content type'),
+        related_name="django_attach",
         null=True,
         blank=True
     )
