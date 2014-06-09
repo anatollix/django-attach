@@ -5,7 +5,7 @@
 .attachment-inline .attachment .delete {
     width: 10px;
     height: 10px;
-    background: url(../../admin/img/icon_deletelink.gif) no-repeat;
+    background: url(/site_media/static/admin/img/admin/icon_deletelink.gif) no-repeat;
     vertical-align: middle;
     display: none;
     cursor: pointer;
