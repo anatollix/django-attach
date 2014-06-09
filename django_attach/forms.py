@@ -7,7 +7,8 @@ from django.forms.widgets import HiddenInput
 from django.forms.formsets import ManagementForm, TOTAL_FORM_COUNT, INITIAL_FORM_COUNT, MAX_NUM_FORM_COUNT
 from django.contrib.contenttypes.generic import GenericInlineModelAdmin, BaseGenericInlineFormSet
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.admin.templatetags.admin_static import static
+#from django.contrib.admin.templatetags.admin_static import static
+from django.conf import settings
 
 from .models import Attachment, Temporary
 
@@ -36,7 +37,7 @@ class BaseAttachmentInlineFormSet(BaseGenericInlineFormSet):
             content_type = None
             object_id = None
             if data is not None:
-                try:    
+                try:
                     content_type = int(data[self.rel_name+'-CONTENT_TYPE'])
                     object_id = int(data[self.rel_name+'-OBJECT_ID'])
                 except (KeyError, ValueError):
@@ -113,10 +114,16 @@ class AttachmentInline(GenericInlineModelAdmin):
     @property
     def media(self):
         return super(AttachmentInline, self).media + forms.Media(
+            #js=[
+            #    static('django_attach/js/queue.v1.min.js'),
+            #    static('django_attach/js/d3.v3.min.js'),
+            #    static('django_attach/js/attachment_inline.js'),
+            #],
+            #css={'screen': [static('django_attach/css/attachment_inline.css')]},
             js=[
-                static('django_attach/js/queue.v1.min.js'),
-                static('django_attach/js/d3.v3.min.js'),
-                static('django_attach/js/attachment_inline.js'),
+                settings.STATIC_URL + 'django_attach/js/queue.v1.min.js',
+                settings.STATIC_URL + 'django_attach/js/d3.v3.min.js',
+                settings.STATIC_URL + 'django_attach/js/attachment_inline.js',
             ],
-            css={'screen': [static('django_attach/css/attachment_inline.css')]},
+            css={'screen': [settings.STATIC_URL + 'django_attach/css/attachment_inline.css']},
         )
